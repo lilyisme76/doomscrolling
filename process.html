@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Process | The Infinite Descent</title>
+    <link rel="stylesheet" href="process.css">
+</head>
+<body class="light-mode">
+    <nav class="process-nav">
+        <div class="nav-top-row">
+            <button class="back-btn" onclick="location.href='index.html'">Back</button>
+            <button id="mode-toggle" class="nav-btn" onclick="toggleMode()">Dark Mode</button>
+        </div>
+        <div class="nav-menu">
+            <a href="#section-idea">Idea</a>
+            <a href="#section-research">Research</a>
+            <a href="#section-outcome">Outcome</a>
+            <a href="#section-design">Design</a>
+            <a href="#section-coding">Coding</a>
+            <a href="#section-receipt">Receipt</a>
+            <a href="#section-hardware">Hardware</a>
+            <a href="#section-biblio">Ref</a>
+        </div>
+    </nav>
+
+    <main class="content-wrapper">
+        <header class="process-header">
+            <h1 style="letter-spacing: 0.0em; line-height: 0.9; margin-bottom: 10px;">
+    The Infinite Descent
+    <span style="display: block; font-weight: lighter; font-size: 0.45em; letter-spacing: 0.0em; line-height: 1.2; margin-top: 5px;">
+        Deconstructing Digital Habituation
+    </span>
+</h1>
+            <p class="subtitle">디지털 중독의 구조를 파헤치고 시각화하는 과정</p>
+        </header>
+
+        <section id="section-idea" class="reveal-section">
+            <div class="section-label">01. Idea Concept</div>
+            <h2>생각의 시작</h2>
+            <p>아침에 눈을 뜨자마자, 그리고 잠들기 직전까지 우리는 왜 스마트폰을 놓지 못할까요? 저의 하루 평균 6시간이라는 스크린 타임 데이터를 보며, 이것이 개인의 의지 부족이 아니라 설계된 구조의 문제라는 것을 깨달았습니다. 사용자를 '보이지 않는 목줄'로 묶어두는 디지털 환경을 해부해보기로 했습니다.</p>
+            <div class="gallery-module" id="gal-idea">
+                <div class="main-display"><img src="idea_main.jpg"></div>
+                <div class="thumb-list">
+                    <img src="idea1.jpg" onclick="changeImg(this, 'gal-idea')">
+                </div>
+            </div>
+        </section>
+
+        <section id="section-research" class="reveal-section">
+            <div class="section-label">02. Research</div>
+            <h2>심리학과 디자인의 결합</h2>
+            <p>브라이언 완싱크의 '바닥 없는 접시' 실험처럼, 시각적인 멈춤 신호가 없으면 인간은 배가 불러도 계속 먹게 됩니다. 이 원리를 웹의 '무한 스크롤'에 대입했습니다. 또한 슬롯머신처럼 끊임없이 보상을 기대하게 만드는 '가변적 보상' 시스템과 우리를 속이는 '다크 패턴' 디자인을 집중적으로 연구했습니다.</p>
+            <div class="gallery-module" id="gal-research">
+                <div class="main-display"><img src="research_main.jpg"></div>
+                <div class="thumb-list">
+                    <img src="res1.jpg" onclick="changeImg(this, 'gal-research')">
+                </div>
+            </div>
+        </section>
+
+        <section id="section-outcome" class="reveal-section">
+            <div class="section-label">03. Outcome Development</div>
+            <h2>두 가지 결과물의 연결</h2>
+            <p>Outcome 1은 끝없이 스크롤되는 '디지털 덫' 그 자체를 보여주는 웹사이트입니다. Outcome 2는 그 안에서 허비한 시간을 실제 종이 영수증으로 뽑아주는 물리적인 설치물입니다. 화면 속 가짜 시간을 손에 잡히는 진짜 종이로 바꿔서 보여줌으로써, 사용자가 자신의 습관을 직면하게 만들고자 했습니다.</p>
+            <div class="gallery-module" id="gal-outcome">
+                <div class="main-display"><img src="sketch_main.jpg"></div>
+                <div class="thumb-list">
+                    <img src="sk1.jpg" onclick="changeImg(this, 'gal-outcome')">
+                </div>
+            </div>
+        </section>
+
+        <section id="section-design" class="reveal-section">
+            <div class="section-label">04. Visual Design</div>
+            <h2>익숙하지만 낯선 UI</h2>
+            <p>우리가 매일 쓰는 인스타그램이나 핀터레스트처럼 친숙하게 보이도록 디자인했습니다. 하지만 그 뒤에서는 사용자의 모든 클릭과 스크롤 거리를 몰래 기록하고 있습니다. 다크 모드와 라이트 모드를 지원하여 사용자가 어떤 환경에서도 몰입할 수 있도록 시각적인 완성도를 높였습니다.</p>
+            <div class="gallery-module" id="gal-design">
+                <div class="main-display"><img src="design_main.jpg"></div>
+                <div class="thumb-list">
+                    <img src="des1.jpg" onclick="changeImg(this, 'gal-design')">
+                </div>
+            </div>
+        </section>
+
+        <section id="section-coding" class="reveal-section">
+            <div class="section-label">05. Web Development</div>
+            <h2>데이터를 쫓는 코드</h2>
+            <p>단순한 웹사이트를 넘어 사용자의 행동을 실시간으로 감시하는 로직을 짰습니다. `IntersectionObserver`로 끝없는 스크롤을 만들고, `sessionStorage`를 사용해 페이지를 옮겨 다녀도 그동안 쌓인 데이터가 사라지지 않게 구현했습니다. 라즈베리 파이 터치스크린에서도 부드럽게 작동하도록 최적화했습니다.</p>
+            <div class="gallery-module" id="gal-coding">
+                <div class="main-display"><img src="coding_main.jpg"></div>
+                <div class="thumb-list">
+                    <img src="code1.jpg" onclick="changeImg(this, 'gal-coding')">
+                </div>
+            </div>
+        </section>
+
+        <section id="section-receipt" class="reveal-section">
+            <div class="section-label">06. Receipt Design</div>
+            <h2>당신의 시간을 청구합니다</h2>
+            <p>영수증은 이 프로젝트의 하이라이트입니다. 처음에는 무한한 영수증을 벽에 붙이려 했지만, 결국 개개인의 활동에 맞춰 뽑아주는 시스템으로 발전시켰습니다. 58mm 좁은 폭에 맞춰 글자가 잘리지 않게 수십 번 테스트했고, '생명 연장 비용' 같은 단어를 넣어 경각심을 주었습니다.</p>
+            <div class="gallery-module" id="gal-receipt">
+                <div class="main-display"><img src="receipt_main.jpg"></div>
+                <div class="thumb-list">
+                    <img src="rec1.jpg" onclick="changeImg(this, 'gal-receipt')">
+                </div>
+            </div>
+        </section>
+
+        <section id="section-hardware" class="reveal-section">
+            <div class="section-label">07. Hardware Integration</div>
+            <h2>손끝으로 느끼는 디지털</h2>
+            <p>라즈베리 파이에 터치스크린을 연결해 스마트폰처럼 직접 손가락으로 스크롤하는 느낌을 구현했습니다. 영수증 프린터와 연동하여 버튼을 누르면 실제 종이가 지지직 소리를 내며 나옵니다. 컴퓨터 화면 속에만 있던 중독의 증거가 물리적인 현실로 튀어나오는 순간을 만들었습니다.</p>
+            <div class="gallery-module" id="gal-hardware">
+                <div class="main-display"><img src="hw_main.jpg"></div>
+                <div class="thumb-list">
+                    <img src="hw1.jpg" onclick="changeImg(this, 'gal-hardware')">
+                </div>
+            </div>
+        </section>
+
+        <section id="section-biblio" class="reveal-section">
+            <div class="section-label">08. Bibliography</div>
+            <h2>참고 문헌 및 자료</h2>
+            <div class="biblio-box">
+                <p> Williams, J. (2018). Stand out of our Light: Freedom and Resistance in the Attention Economy. Cambridge University Press.</p>
+                <p> Odell, J. (2019). How to do nothing: resisting the attention economy. Melville House.</p>
+                <p> Wansink, B., Painter, J.E. and North, J. (2005). Bottomless Bowls: Why Visual Cues of Portion Size May Influence Intake.</p>
+                <p> The Social Dilemma. (2020). Directed by Jeff Orlowski. Netflix.</p>
+            </div>
+        </section>
+    </main>
+
+    <button class="top-btn" id="topBtn" onclick="scrollToTop()">↑ Top</button>
+
+    <footer class="process-footer">
+        <p style="font-size: 0.5em; text-align: center">&copy; 2026 THE INFINITE DESCENT PROCESS</p>
+    </footer>
+
+    <script src="process.js"></script>
+</body>
+</html>

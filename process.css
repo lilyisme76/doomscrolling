@@ -1,0 +1,112 @@
+:root { 
+    --bg-light: #ffffff; --fg-light: #111111; --gray-light: #f8f8f8; --border-light: #eeeeee;
+    --bg-dark: #000000; --fg-dark: #ffffff; --gray-dark: #111111; --border-dark: #222222;
+    --accent: #ff4757;
+}
+
+body.light-mode { --bg: var(--bg-light); --fg: var(--fg-light); --gray: var(--gray-light); --border: var(--border-light); }
+body.dark-mode { --bg: var(--bg-dark); --fg: var(--fg-dark); --gray: var(--gray-dark); --border: var(--border-dark); }
+
+* { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+body { 
+    background: var(--bg); color: var(--fg); 
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
+    line-height: 1.6; transition: 0.3s ease; overflow-x: hidden;
+}
+
+/* ✅ 네비게이션 컨테이너 */
+.process-nav { 
+    position: fixed; top: 0; left: 0; width: 100%; 
+    background: var(--bg); border-bottom: 1px solid var(--border);
+    z-index: 2000; display: flex; flex-direction: column; padding: 15px 0 10px 0;
+}
+
+/* ✅ 상단 버튼 행: 양 끝 정렬 고정 */
+.nav-top-row {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+    padding: 0 25px; 
+    width: 100%;    
+    box-sizing: border-box;
+}
+
+/* ✅ 하단 목차 행: 중앙 정렬 설정 */
+.nav-menu { 
+    display: flex; 
+    gap: 18px; 
+    justify-content: center; /* 👈 목차들을 가로 중앙으로 정렬 */
+    overflow-x: auto; 
+    padding: 15px 25px 5px; 
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* 모바일처럼 화면이 좁을 때는 중앙 정렬보다 왼쪽부터 흐르는 게 자연스러우므로 보정 */
+@media (max-width: 600px) {
+    .nav-menu {
+        justify-content: flex-start; 
+    }
+}
+
+.nav-menu::-webkit-scrollbar { display: none; }
+
+.nav-menu a { 
+    text-decoration: none; color: var(--fg); font-size: 10px; 
+    text-transform: uppercase; font-weight: 800; opacity: 0.4; 
+    white-space: nowrap; transition: 0.3s;
+}
+.nav-menu a:hover { opacity: 1; color: var(--accent); }
+
+/* ✅ 버튼 스타일: 투명 배경 */
+.back-btn, .nav-btn { 
+    background: transparent; border: none; color: var(--fg); 
+    padding: 5px 0; cursor: pointer; font-size: 11px; font-weight: 800;
+    text-transform: uppercase; opacity: 0.7; transition: 0.3s;
+}
+.back-btn:hover, .nav-btn:hover { opacity: 1; }
+
+/* 본문 레이아웃 */
+.content-wrapper { max-width: 900px; margin: 0 auto; padding: 150px 25px 100px; }
+.process-header { margin-bottom: 100px; }
+.process-header h1 { font-size: clamp(36px, 8vw, 64px); font-weight: 900; letter-spacing: -3px; line-height: 1; margin-bottom: 15px; }
+.subtitle { opacity: 0.5; font-size: clamp(16px, 3vw, 22px); font-weight: 300; }
+
+.reveal-section { margin-bottom: 140px; padding-top: 50px; border-top: 1px solid var(--border); }
+.section-label { color: var(--accent); font-family: monospace; font-size: 12px; margin-bottom: 15px; font-weight: bold; }
+h2 { font-size: clamp(28px, 5vw, 40px); margin-bottom: 25px; letter-spacing: -1.5px; }
+p { color: var(--fg); opacity: 0.8; margin-bottom: 40px; font-size: 17px; max-width: 750px; word-break: keep-all; }
+
+/* 인터렉티브 갤러리 */
+.gallery-module { display: flex; flex-direction: column; gap: 15px; margin-bottom: 30px; }
+.main-display { 
+    width: 100%; aspect-ratio: 16 / 10; background: var(--gray); 
+    border: 1px solid var(--border); border-radius: 15px; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+}
+.main-display img { width: 100%; height: 100%; object-fit: contain; transition: 0.3s; }
+
+.thumb-list { display: flex; gap: 10px; overflow-x: auto; padding: 10px 0; scrollbar-width: none; }
+.thumb-list img { 
+    width: clamp(60px, 12vw, 85px); height: clamp(60px, 12vw, 85px);
+    object-fit: cover; cursor: pointer; border-radius: 10px; 
+    border: 2px solid transparent; transition: 0.2s; opacity: 0.5;
+}
+.thumb-list img:hover { opacity: 1; transform: translateY(-3px); }
+
+/* 출처 박스 */
+.biblio-box { background: var(--gray); padding: 30px; border-radius: 15px; border: 1px solid var(--border); }
+.biblio-box p { font-size: 14px; margin-bottom: 12px; font-family: monospace; opacity: 0.7; }
+
+/* Top 버튼 */
+.top-btn { 
+    position: fixed; bottom: 25px; right: 25px; display: none;
+    background: var(--fg); color: var(--bg); border: 1px solid var(--border);
+    padding: 12px 20px; border-radius: 50px; cursor: pointer; font-weight: 800; font-size: 12px;
+}
+
+@media (min-width: 768px) {
+    .nav-top-row { padding: 0 50px; }
+    .nav-menu { padding: 20px 50px 5px; gap: 25px; }
+    .content-wrapper { padding-top: 160px; }
+}

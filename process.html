@@ -43,14 +43,16 @@
                 <div class="main-display"><img src="idea_main.jpg"></div>
                 <div class="thumb-list">
                     <img src="idea1.jpg" onclick="changeImg(this, 'gal-idea')">
+                    <img src="idea2.jpg" onclick="changeImg(this, 'gal-idea')">
+                    <img src="idea3.jpg" onclick="changeImg(this, 'gal-idea')">
                 </div>
             </div>
         </section>
 
         <section id="section-research" class="reveal-section">
             <div class="section-label">02. Research</div>
-            <h2>심리학과 디자인의 결합</h2>
-            <p>브라이언 완싱크의 '바닥 없는 접시' 실험처럼, 시각적인 멈춤 신호가 없으면 인간은 배가 불러도 계속 먹게 됩니다. 이 원리를 웹의 '무한 스크롤'에 대입했습니다. 또한 슬롯머신처럼 끊임없이 보상을 기대하게 만드는 '가변적 보상' 시스템과 우리를 속이는 '다크 패턴' 디자인을 집중적으로 연구했습니다.</p>
+            <h2 style="line-height: 1.3;">Psychology & Design</h2>
+            <p style="line-height: 1.3;">Just like Brian Wansink's "Bottomless Soup Bowl" experiment, humans will continue to consume even when full if there are no visual stopping cues. I applied this psychological principle to the web's "infinite scroll." Furthermore, I intensively researched the "variable rewards" system—which keeps us constantly anticipating dopamine hits like a slot machine—and "dark pattern" designs that intentionally deceive our cognition.</p>
             <div class="gallery-module" id="gal-research">
                 <div class="main-display"><img src="research_main.jpg"></div>
                 <div class="thumb-list">
@@ -61,8 +63,8 @@
 
         <section id="section-outcome" class="reveal-section">
             <div class="section-label">03. Outcome Development</div>
-            <h2>두 가지 결과물의 연결</h2>
-            <p>Outcome 1은 끝없이 스크롤되는 '디지털 덫' 그 자체를 보여주는 웹사이트입니다. Outcome 2는 그 안에서 허비한 시간을 실제 종이 영수증으로 뽑아주는 물리적인 설치물입니다. 화면 속 가짜 시간을 손에 잡히는 진짜 종이로 바꿔서 보여줌으로써, 사용자가 자신의 습관을 직면하게 만들고자 했습니다.</p>
+            <h2 style="line-height: 1.3;">Outcome Development</h2>
+            <p style="line-height: 1.3;">Outcome 1 is a website that simulates the "digital trap" of endless scrolling itself. Outcome 2 is a physical installation that prints out the time wasted inside that trap as an actual paper receipt. By converting volatile, on-screen time into tangible paper, I aimed to force users to physically confront their digital habits.</p>
             <div class="gallery-module" id="gal-outcome">
                 <div class="main-display"><img src="sketch_main.jpg"></div>
                 <div class="thumb-list">
@@ -73,8 +75,8 @@
 
         <section id="section-design" class="reveal-section">
             <div class="section-label">04. Visual Design</div>
-            <h2>익숙하지만 낯선 UI</h2>
-            <p>우리가 매일 쓰는 인스타그램이나 핀터레스트처럼 친숙하게 보이도록 디자인했습니다. 하지만 그 뒤에서는 사용자의 모든 클릭과 스크롤 거리를 몰래 기록하고 있습니다. 다크 모드와 라이트 모드를 지원하여 사용자가 어떤 환경에서도 몰입할 수 있도록 시각적인 완성도를 높였습니다.</p>
+            <h2 style="line-height: 1.3;">Familiar yet Unfamiliar UI</h2>
+            <p style="line-height: 1.3;">I designed the UI to feel intimately familiar, mimicking platforms we consume every day like Instagram or Pinterest. However, behind the scenes, it is secretly tracking and recording every click and scroll depth of the user. It fully supports both Light and Dark modes to ensure high visual polish and complete user immersion in any environment.</p>
             <div class="gallery-module" id="gal-design">
                 <div class="main-display"><img src="design_main.jpg"></div>
                 <div class="thumb-list">
@@ -85,8 +87,8 @@
 
         <section id="section-coding" class="reveal-section">
             <div class="section-label">05. Web Development</div>
-            <h2>데이터를 쫓는 코드</h2>
-            <p>단순한 웹사이트를 넘어 사용자의 행동을 실시간으로 감시하는 로직을 짰습니다. `IntersectionObserver`로 끝없는 스크롤을 만들고, `sessionStorage`를 사용해 페이지를 옮겨 다녀도 그동안 쌓인 데이터가 사라지지 않게 구현했습니다. 라즈베리 파이 터치스크린에서도 부드럽게 작동하도록 최적화했습니다.</p>
+            <h2 style="line-height: 1.3;">Web Development: Code that Chases Data</h2>
+            <p style="line-height: 1.3;">Going beyond a simple static website, I built logic that monitors and collects user behavior in real-time. I combined infinite scrolling with the IntersectionObserver API, utilizing sessionStorage to ensure accumulated behavioral data is maintained across page transitions. Furthermore, I optimized performance to ensure smooth operation even on a Raspberry Pi touchscreen.</p>
             <div class="gallery-module" id="gal-coding">
                 <div class="main-display"><img src="coding_main.jpg"></div>
                 <div class="thumb-list">
@@ -97,8 +99,8 @@
 
         <section id="section-receipt" class="reveal-section">
             <div class="section-label">06. Receipt Design</div>
-            <h2>당신의 시간을 청구합니다</h2>
-            <p>영수증은 이 프로젝트의 하이라이트입니다. 처음에는 무한한 영수증을 벽에 붙이려 했지만, 결국 개개인의 활동에 맞춰 뽑아주는 시스템으로 발전시켰습니다. 58mm 좁은 폭에 맞춰 글자가 잘리지 않게 수십 번 테스트했고, '생명 연장 비용' 같은 단어를 넣어 경각심을 주었습니다.</p>
+            <h2 style="line-height: 1.3;">Receipt Design: Billing Your Time</h2>
+            <p style="line-height: 1.3;">The receipt is the core medium of this project. Initially, I planned to exhibit an infinitely long receipt on a wall, but it evolved into an interactive system that instantly prints based on individual behavioral data. I conducted dozens of print tests to ensure the typography remained crisp on the narrow 58mm thermal paper, and designed it to evoke a chilling sense of alarm by using terms like "Life Expectancy Cost."</p>
             <div class="gallery-module" id="gal-receipt">
                 <div class="main-display"><img src="receipt_main.jpg"></div>
                 <div class="thumb-list">
@@ -109,8 +111,8 @@
 
         <section id="section-hardware" class="reveal-section">
             <div class="section-label">07. Hardware Integration</div>
-            <h2>손끝으로 느끼는 디지털</h2>
-            <p>라즈베리 파이에 터치스크린을 연결해 스마트폰처럼 직접 손가락으로 스크롤하는 느낌을 구현했습니다. 영수증 프린터와 연동하여 버튼을 누르면 실제 종이가 지지직 소리를 내며 나옵니다. 컴퓨터 화면 속에만 있던 중독의 증거가 물리적인 현실로 튀어나오는 순간을 만들었습니다.</p>
+            <h2 style="line-height: 1.3;">Hardware Integration: Digital at Your Fingertips</h2>
+            <p style="line-height: 1.3;">I connected a capacitive touchscreen to a Raspberry Pi to recreate the exact tactile experience of scrolling on a smartphone. By integrating this with a thermal printer, I designed it so that when the user presses the 'Print' button, actual paper is dispensed with a mechanical sound. This creates a powerful moment where the "evidence of addiction," previously trapped in a digital screen, bursts out into physical reality.</p>
             <div class="gallery-module" id="gal-hardware">
                 <div class="main-display"><img src="hw_main.jpg"></div>
                 <div class="thumb-list">
@@ -121,7 +123,7 @@
 
         <section id="section-biblio" class="reveal-section">
             <div class="section-label">08. Bibliography</div>
-            <h2>참고 문헌 및 자료</h2>
+            <h2 style="line-height: 1.3;">Bibliography</h2>
             <div class="biblio-box">
                 <p> Williams, J. (2018). Stand out of our Light: Freedom and Resistance in the Attention Economy. Cambridge University Press.</p>
                 <p> Odell, J. (2019). How to do nothing: resisting the attention economy. Melville House.</p>

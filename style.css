@@ -5,12 +5,18 @@ body.dark-mode { --bg: #000000; --fg: #ffffff; --gray: #1a1a1a; --border: #33333
 body { background: var(--bg); color: var(--fg); font-family: -apple-system, sans-serif; transition: background 0.3s, color 0.3s; overflow: hidden; }
 
 /* ✅ 네비게이션 & 공통 폰트 (원본 복구: 11px, 800, 대문자) */
-.top-nav { position: fixed; top: 0; left: 0; width: 100%; height: 60px; display: flex; justify-content: space-between; align-items: center; padding: 0 20px; background: var(--bg); z-index: 1000; border-bottom: 1px solid var(--border); }
+.top-nav { 
+    position: fixed; top: 0; left: 0; width: 100%; height: 60px; 
+    display: flex; justify-content: center; gap: 40px; align-items: center; 
+    padding: 0 20px; background: var(--bg); z-index: 1000; border-bottom: 1px solid var(--border); 
+}
 .nav-btn { background: transparent; border: none; color: var(--fg); font-size: 11px; font-weight: 800; text-transform: uppercase; opacity: 0.6; transition: 0.3s; cursor: pointer; padding: 8px 10px; }
 .nav-btn:hover { opacity: 1; }
 
-.step-view { position: fixed; inset: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; width: 100vw; height: 100vh; padding: 20px; }
-.center-content { text-align: center; width: 100%; max-width: 400px; }
+/* ✅ 쏠림 현상 원인 해결: 100vw를 100%로 변경! */
+.step-view { position: fixed; inset: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; width: 100%; height: 100vh; padding: 20px; }
+/* ✅ 완벽한 중앙 정렬을 위해 margin: 0 auto 추가 */
+.center-content { text-align: center; width: 100%; max-width: 400px; margin: 0 auto; }
 
 .title { font-size: 32px; font-weight: 800; margin-bottom: 10px; line-height: 1.2; }
 .modal-title { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 25px; color: var(--fg); opacity: 0.9; }
@@ -24,33 +30,37 @@ body { background: var(--bg); color: var(--fg); font-family: -apple-system, sans
 .add-circle-btn { width: 45px; height: 45px; border-radius: 50%; border: none; background: var(--fg); color: var(--bg); font-size: 20px; font-weight: 800; cursor: pointer; flex-shrink: 0; transition: 0.2s;}
 .add-circle-btn:hover { transform: scale(1.1); }
 
-/* ✅ 메인 버튼들 폰트 통일 */
-.btn-main, .btn-text-only { font-size: 11px !important; font-weight: 800 !important; text-transform: uppercase !important; }
-.btn-main { background: var(--fg); color: var(--bg); border: none; padding: 18px; border-radius: 40px; cursor: pointer; width: 100%; margin-top: 20px; }
-.btn-main.disabled { opacity: 0.5; pointer-events: none; }
-/* ✅ [문제 4 해결] 네비게이션 버튼 가운데 정렬 및 여백 주기 */
-.top-nav { 
-    position: fixed; 
-    top: 0; left: 0; 
-    width: 100%; height: 60px; 
-    display: flex; 
-    justify-content: center; /* 가운데 정렬로 변경 */
-    gap: 40px; /* 버튼 사이의 여백 (필요에 따라 늘리거나 줄이세요) */
-    align-items: center; 
-    padding: 0 20px; 
-    background: var(--bg); 
-    z-index: 1000; 
-    border-bottom: 1px solid var(--border); 
-}
-
-/* ✅ [문제 3 해결] 사이트 내의 모든 주요 버튼 폰트 완벽 통일 (프린트 버튼 포함) */
+/* ✅ 오타 완벽 제거됨 (//* -> /*) */
+/* ✅ 1. 사이트 내의 모든 주요 버튼 폰트 완벽 통일 */
 .btn-main, .btn-text-only, .receipt-floating-btn, .refresh-feed-btn, .nav-btn { 
-    font-family: -apple-system, sans-serif; /* 기본 폰트 강제 적용 */
+    font-family: -apple-system, sans-serif; 
     font-size: 11px !important; 
     font-weight: 800 !important; 
     text-transform: uppercase !important; 
     letter-spacing: 1px !important; 
 }
+
+/* ✅ 2. BEGIN 등 메인 버튼 디자인 */
+.btn-main { background: var(--fg); color: var(--bg); border: none; padding: 18px; border-radius: 40px; cursor: pointer; width: 100%; margin-top: 20px; }
+.btn-main.disabled { opacity: 0.5; pointer-events: none; }
+
+/* ✅ 4. Return to Feed 버튼 디자인 (메인 버튼과 둥글기/색상 통일) */
+.btn-text-only {
+    display: block;
+    background: var(--fg); 
+    color: var(--bg);
+    border: none; 
+    padding: 16px 35px; 
+    border-radius: 40px; 
+    cursor: pointer;
+    margin: 30px auto 10px auto;
+    transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    width: fit-content;
+}
+.btn-text-only:hover { opacity: 0.8; transform: translateY(-2px); }
+.btn-text-only:active { transform: translateY(2px) scale(0.98); }
+
 
 .nav-btn { 
     background: transparent; border: none; color: var(--fg); 
@@ -146,7 +156,7 @@ input[type=range]::-webkit-slider-thumb { appearance: none; width: 24px; height:
 .side-actions { 
     position: absolute; 
     right: 20px; 
-    bottom: 80px; 
+    bottom: 30px; 
     display: flex; 
     flex-direction: column; 
     align-items: center; 

@@ -1,9 +1,13 @@
+// (상단 변수 선언부)
 let startTime = Date.now();
 let totalScrollPx = 0;
 let misleadingClicks = 0;
-let lastScrollTop = 0;
 let refreshCount = 0;
 let dopamineSpikes = 0;
+
+// ✅ 스크롤 위치 기억 변수를 피드용과 릴스용으로 분리
+let lastMainScroll = 0;
+let lastReelScroll = 0;
 
 let userName = "UNKNOWN_SUBJECT";
 let primaryTriggers = [];
@@ -165,11 +169,64 @@ function refreshFeed() {
     setTimeout(() => { grid.classList.remove('refresh-bounce'); }, 600);
 }
 
+// ✅ [중복 제거됨] 릴스 추가 및 더블클릭 이벤트 연결
 function addReel(url) {
     const section = document.createElement('div');
     section.className = 'reel-section';
-    section.innerHTML = `<img src="${url}"><div class="side-actions"><button class="action-btn" onclick="event.stopPropagation(); dopamineSpikes++; this.classList.add('active'); saveState();"><span class="icon">♥</span></button></div>`;
+    
+    const reelId = `reel-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
+    
+    // HTML 구조: 이미지는 배경처럼, 그 위에 투명한 클릭 레이어를 둡니다.
+    section.innerHTML = `
+        <img src="${url}" class="reel-img">
+        <div class="side-actions">
+            <button id="like-${reelId}" class="action-btnLike" onclick="handleLike(this); event.stopPropagation();">
+                <span class="icon">♥</span>
+            </button>
+        </div>
+        <div class="click-layer"></div>
+    `;
+
+    // 더블클릭 이벤트 리스너 (투명 레이어에 부여)
+    const clickLayer = section.querySelector('.click-layer');
+    clickLayer.addEventListener('dblclick', function(e) {
+        const likeBtn = section.querySelector('.action-btnLike');
+        
+        // 하트가 활성화 안 됐을 때만 처리
+        if (!likeBtn.classList.contains('active')) {
+            handleLike(likeBtn);
+        }
+        // 시각적 피드백: 더블클릭한 위치에 하트 팝업
+        showHeartAnimation(e.clientX, e.clientY);
+    });
+
     document.getElementById('reels-viewport').appendChild(section);
+}
+
+// ✅ [중복 제거됨] 좋아요 처리 함수
+function handleLike(btn) {
+    if (!btn.classList.contains('active')) {
+        btn.classList.add('active');
+        dopamineSpikes++; 
+        saveState();
+        if (navigator.vibrate) navigator.vibrate(15); // 모바일 진동 피드백
+    }
+}
+
+// ✅ [중복 제거됨] 더블클릭 시 하트 애니메이션 생성
+function showHeartAnimation(x, y) {
+    const heart = document.createElement('div');
+    heart.className = 'temp-heart';
+    heart.innerHTML = '♥';
+    heart.style.cssText = `
+        position: fixed; top: ${y}px; left: ${x}px;
+        transform: translate(-50%, -50%) scale(0);
+        font-size: 80px; color: rgba(255, 0, 0, 0.8);
+        pointer-events: none; z-index: 1000;
+        animation: heartBeatOut 0.8s ease-out forwards;
+    `;
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 800);
 }
 
 function openDetail(clickedUrl) {
@@ -191,8 +248,17 @@ function closeDetail() {
 
 function showPage(id) {
     document.querySelectorAll('.step-view, main').forEach(el => el.style.display = 'none');
+    
+    // ✅ 1. 페이지를 이동할 때 '클래스 이름'으로 버튼을 무조건 찾아서 숨김
+    const refreshBtn = document.querySelector('.refresh-feed-btn');
+    if (refreshBtn) {
+        refreshBtn.style.display = 'none';
+    }
+
+    // 타겟 페이지 띄우기
     document.getElementById(id).style.display = (id === 'main-feed') ? 'block' : 'flex';
     
+    // 로딩 화면 처리
     if (id === 'page-4') {
         let p = 0;
         const interval = setInterval(() => {
@@ -206,9 +272,16 @@ function showPage(id) {
         }, 40);
     }
     
+    // 메인 피드 도착 시 처리
     if (id === 'main-feed') {
         startTime = Date.now(); 
         document.getElementById('print-btn').style.display = 'block';
+        
+        // ✅ 2. 메인 피드에 도착했을 때만 버튼을 다시 살려냄!
+        if (refreshBtn) {
+            refreshBtn.style.display = 'block'; 
+        }
+        
         if (!document.getElementById('grid').children.length) {
             loadMainFeed();
         }
@@ -224,7 +297,6 @@ function openReceipt() {
     const totalCostMin = ((timeSpentSec + penaltySec) / 60).toFixed(1);
     const scrollMeters = (totalScrollPx / 3000).toFixed(1);
 
-    // ✅ 데이터 가공 및 대문자 변환 (영수증 특유의 기계적인 느낌)
     const traitText = analyzedTraits.length > 0 ? analyzedTraits.join(', ').toUpperCase() : "NONE";
     const triggerText = primaryTriggers.length > 0 ? primaryTriggers.join(', ').toUpperCase() : "NONE";
     const interestText = initialPicks.length > 0 ? initialPicks.join(', ').toUpperCase() : "NONE"; 
@@ -282,14 +354,11 @@ function openReceipt() {
 // ✅ 스크롤 튕기기 애니메이션 함수
 function triggerScrollNudge() {
     const detailOverlay = document.getElementById('detail-overlay');
-    // 1. 릴스 창 열려있을 때
     if (detailOverlay.style.display === 'block') {
         const reelsViewport = document.getElementById('reels-viewport');
         reelsViewport.classList.add('nudge-active');
         setTimeout(() => reelsViewport.classList.remove('nudge-active'), 1200);
-    } 
-    // 2. 메인 피드일 때
-    else {
+    } else {
         const mainFeed = document.getElementById('main-feed');
         if (mainFeed.style.display === 'block') {
             const grid = document.getElementById('grid');
@@ -305,31 +374,139 @@ function resetIdleTimer() {
     idleTimer = setTimeout(triggerScrollNudge, 3000); // 3초 뒤 튕김
 }
 
-// ✅ 메인 피드 스크롤 이벤트 (타이머 리셋 포함)
+// ✅ 메인 피드 스크롤 이벤트 (Depth 추적)
+document.getElementById('main-feed').addEventListener('scroll', function() {
+    let currentScroll = this.scrollTop;
+    
+    // 갑작스러운 스크롤 튐(메모리 삭제 시) 방지 필터 (1000px 이상 한 번에 튀면 무시)
+    let diff = Math.abs(currentScroll - lastMainScroll);
+    if (diff < 1000) totalScrollPx += diff; 
+    
+    lastMainScroll = currentScroll;
+    
+    // 무한 스크롤 & 메모리 청소
+    if (this.scrollHeight - this.scrollTop - this.clientHeight < 500) {
+        loadMainFeed();
+        cleanupMemory();
+    }
+    resetIdleTimer();
+});
+
+// ✅ 릴스(쇼츠) 피드 스크롤 이벤트 (Depth 추적 추가!)
+document.getElementById('detail-overlay').addEventListener('scroll', function() {
+    let currentScroll = this.scrollTop;
+    
+    // 릴스 화면에서도 스크롤한 만큼 깊이에 추가
+    let diff = Math.abs(currentScroll - lastReelScroll);
+    if (diff < 1500) totalScrollPx += diff; 
+    
+    lastReelScroll = currentScroll;
+
+    // 무한 스크롤 & 메모리 청소
+    if (this.scrollHeight - this.scrollTop - this.clientHeight < 800) {
+        for (let i = 0; i < 3; i++) {
+            addReel(getAlgoImg().url);
+        }
+        cleanupMemory();
+    }
+    resetIdleTimer();
+});
+
+// ✅ 페이지 초기화 (항상 맨 마지막에 위치해야 함)
+if (!loadState()) { 
+    showPage('page-1'); 
+}
+
+// ✅ 메모리 누수 방지용 변수 추가
+let deletedGridRows = 0; // 삭제된 메인 피드 줄 수
+let deletedReels = 0;    // 삭제된 릴스 개수
+
+// ✅ 메모리 청소 함수 (Virtualization)
+function cleanupMemory() {
+    const grid = document.getElementById('grid');
+    const reels = document.getElementById('reels-viewport');
+
+    // 1. 메인 피드(그리드) 메모리 관리: 60개(화면 밖 한참 위)가 넘어가면 오래된 것 삭제
+    if (grid.children.length > 60) {
+        // 위에서부터 15개(5줄)를  DOM에서 아예 날려버림
+        for (let i = 0; i < 15; i++) {
+            grid.removeChild(grid.firstElementChild);
+        }
+        deletedGridRows += 5; // 3열 그리드이므로 15개 = 5줄
+        
+        // 삭제된 높이만큼 위에 투명한 패딩을 줘서 스크롤 위치가 튀는 것을 방지!
+        const rowHeight = grid.clientWidth / 3; // 아이템 1개의 대략적 높이 (1:1 비율 기준)
+        grid.style.paddingTop = `${deletedGridRows * rowHeight}px`;
+    }
+
+    // 2. 릴스(쇼츠) 뷰포트 메모리 관리: 10개가 넘어가면 오래된 것 삭제
+    if (reels.children.length > 10) {
+        // 위에서부터 3개 삭제
+        for (let i = 0; i < 3; i++) {
+            reels.removeChild(reels.firstElementChild);
+            deletedReels++;
+        }
+        // 릴스는 화면 전체 높이를 차지하므로, window.innerHeight 기준으로 패딩 추가
+        reels.style.paddingTop = `${deletedReels * window.innerHeight}px`;
+    }
+}
+
+// ✅ 스크롤 이벤트 수정: 새 데이터를 불러온 직후 메모리 청소 실행
 document.getElementById('main-feed').addEventListener('scroll', function() {
     let currentScroll = this.scrollTop;
     totalScrollPx += Math.abs(currentScroll - lastScrollTop);
     lastScrollTop = currentScroll;
     
-    // 무한 스크롤
+    // 바닥에 닿기 전에 추가
     if (this.scrollHeight - this.scrollTop - this.clientHeight < 500) {
         loadMainFeed();
+        cleanupMemory(); // 🧹 새 요소가 추가될 때 과거 요소 삭제
     }
-    
-    resetIdleTimer(); // 스크롤 시 튕기기 타이머 리셋
+    resetIdleTimer();
 });
 
-// ✅ 릴스(쇼츠) 피드 스크롤 이벤트 (버그 수정: 확실한 무한 스크롤 로직 탑재)
 document.getElementById('detail-overlay').addEventListener('scroll', function() {
-    // 무한 스크롤 감지 (바닥에 닿기 전에 추가)
+    // 바닥에 닿기 전에 추가
     if (this.scrollHeight - this.scrollTop - this.clientHeight < 800) {
         for (let i = 0; i < 3; i++) {
             addReel(getAlgoImg().url);
         }
+        cleanupMemory(); // 🧹 새 릴스가 추가될 때 과거 릴스 삭제
     }
-    
-    resetIdleTimer(); // 스크롤 시 튕기기 타이머 리셋
+    resetIdleTimer();
 });
 
-// 페이지 초기화
-if (!loadState()) { showPage('page-1'); }
+// ✅ 잃어버린 새로고침 기능 복구
+function refreshFeed() {
+    refreshCount++; // 영수증 통계용
+    
+    const grid = document.getElementById('grid');
+    const mainFeed = document.getElementById('main-feed');
+    const detailOverlay = document.getElementById('detail-overlay');
+    
+    // 1. 릴스(사진) 창이 열려있다면 닫아버림 (피드로 강제 복귀)
+    if (detailOverlay && detailOverlay.style.display === 'block') {
+        closeDetail();
+    }
+    
+    // 2. 메인 피드 스크롤 맨 위로 올리기
+    if (mainFeed) mainFeed.scrollTop = 0;
+    
+    // 3. 바운싱 애니메이션과 함께 피드 데이터 갈아끼우기
+    if (grid) {
+        grid.classList.add('refresh-bounce');
+        
+        // 0.15초 뒤에 기존 이미지 다 날리고 새로 불러옴
+        setTimeout(() => { 
+            grid.innerHTML = ''; 
+            loadMainFeed(); 
+        }, 150);
+        
+        // 0.6초 뒤에 튕기는 애니메이션 종료
+        setTimeout(() => { 
+            grid.classList.remove('refresh-bounce'); 
+        }, 600);
+    }
+    
+    resetIdleTimer(); // 튕기기 타이머 리셋
+}

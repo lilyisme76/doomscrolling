@@ -41,7 +41,7 @@
         <section id="page-trigger" class="step-view" style="display:none;">
             <div class="center-content">
                 <h2 class="modal-title">Behavioral Trigger</h2>
-                <p class="desc">Identify the emotional voids that drive you to scroll. (Select at least one)</p>
+                <p class="desc">Identify the emotional voids that drive you to scroll. <br> (Select at least one)</p>
                 <div class="quiz-grid">
                     <button class="quiz-btn trigger-btn" data-value="Boredom" onclick="toggleTrigger(this, 'Boredom')">Chronic Boredom</button>
                     <button class="quiz-btn trigger-btn" data-value="Anxiety" onclick="toggleTrigger(this, 'Anxiety')">Real-world Anxiety</button>
@@ -84,7 +84,7 @@
         <section id="page-quiz" class="step-view" style="display:none;">
             <div class="center-content">
                 <h2 class="modal-title">Psychological Profiling</h2>
-                <p class="desc">Which psychological loopholes make you vulnerable? (Select at least one)</p>
+                <p class="desc">Which psychological loopholes make you vulnerable? <br>(Select at least one)</p>
                 <div id="quiz-container" class="quiz-grid">
                     <button class="quiz-btn" data-value="Stimulus-Seeking" onclick="toggleQuiz(this, 'Stimulus-Seeking')">Visual Stimulus Seeking</button>
                     <button class="quiz-btn" data-value="Escapist" onclick="toggleQuiz(this, 'Escapist')">Reality Escapism</button>
@@ -120,14 +120,14 @@
 
         <main id="main-feed" style="display:none;">
             <div class="feed-header">
-                <button class="refresh-feed-btn" onclick="refreshFeed()">⟳ Pull to Refresh</button>
+                <button class="refresh-feed-btn" onclick="refreshFeed()">Refresh</button>
             </div>
             <div id="grid" class="grid-container"></div>
             <div id="grid-anchor" style="height: 50px; width: 100%;"></div>
         </main>
     </div>
 
-    <div id="detail-overlay" class="detail-overlay" style="display:none;">
+   <div id="detail-overlay" class="detail-overlay" style="display:none;">
         <button class="close-detail" onclick="closeDetail()">✕</button>
         <div id="reels-viewport" class="reels-viewport"></div>
         <div id="reels-anchor" style="height: 10px; width: 100%;"></div>
@@ -136,6 +136,9 @@
     <div id="receipt-modal" class="modal-overlay" style="display:none;">
         <div class="modal-box" id="receipt-modal-box"></div>
     </div>
+
+<button class="refresh-feed-btn" style="display: none;" onclick="refreshFeed()">Refresh</button>
+
     <button id="print-btn" class="receipt-floating-btn" style="display:none;" onclick="openReceipt()">Print Receipt</button>
 
     <script src="script.js"></script>

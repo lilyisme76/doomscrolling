@@ -4,7 +4,7 @@ body.dark-mode { --bg: #000000; --fg: #ffffff; --gray: #1a1a1a; --border: #33333
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body { background: var(--bg); color: var(--fg); font-family: -apple-system, sans-serif; transition: background 0.3s, color 0.3s; overflow: hidden; }
 
-/* ✅ 네비게이션 탭 글씨체 통일 (11px, 800, 대문자) */
+/* ✅ 네비게이션 & 공통 폰트 (원본 복구: 11px, 800, 대문자) */
 .top-nav { position: fixed; top: 0; left: 0; width: 100%; height: 60px; display: flex; justify-content: space-between; align-items: center; padding: 0 20px; background: var(--bg); z-index: 1000; border-bottom: 1px solid var(--border); }
 .nav-btn { background: transparent; border: none; color: var(--fg); font-size: 11px; font-weight: 800; text-transform: uppercase; opacity: 0.6; transition: 0.3s; cursor: pointer; padding: 8px 10px; }
 .nav-btn:hover { opacity: 1; }
@@ -13,82 +13,196 @@ body { background: var(--bg); color: var(--fg); font-family: -apple-system, sans
 .center-content { text-align: center; width: 100%; max-width: 400px; }
 
 .title { font-size: 32px; font-weight: 800; margin-bottom: 10px; line-height: 1.2; }
-
-/* ✅ 각 탭의 제목들 & 스크린타임 글씨를 프로세스 탭 폰트(11px, 800, 대문자)와 일치 */
 .modal-title { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 25px; color: var(--fg); opacity: 0.9; }
 #screentime-display { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: var(--accent); margin-bottom: 15px; }
 
 .desc { font-size: 14px; opacity: 0.5; margin-bottom: 30px; }
 .text-input { width: 100%; padding: 18px 20px; border-radius: 15px; border: 1px solid var(--border); background: var(--gray); color: var(--fg); font-size: 15px; outline: none; margin-bottom: 15px; }
 
-/* ✅ 관심사 추가 버튼 (둥근 디자인) */
 .custom-input-group { display: flex; gap: 10px; margin-bottom: 20px; align-items: center; }
 .custom-input-group .text-input { margin-bottom: 0; flex: 1; padding: 14px 15px; font-size: 13px; }
 .add-circle-btn { width: 45px; height: 45px; border-radius: 50%; border: none; background: var(--fg); color: var(--bg); font-size: 20px; font-weight: 800; cursor: pointer; flex-shrink: 0; transition: 0.2s;}
 .add-circle-btn:hover { transform: scale(1.1); }
 
-/* ✅ 메인 버튼들 (11px, 800 통일) */
-.btn-main, .refresh-feed-btn, .receipt-floating-btn, .btn-text-only { font-size: 11px !important; font-weight: 800 !important; text-transform: uppercase !important; }
+/* ✅ 메인 버튼들 폰트 통일 */
+.btn-main, .btn-text-only { font-size: 11px !important; font-weight: 800 !important; text-transform: uppercase !important; }
 .btn-main { background: var(--fg); color: var(--bg); border: none; padding: 18px; border-radius: 40px; cursor: pointer; width: 100%; margin-top: 20px; }
 .btn-main.disabled { opacity: 0.5; pointer-events: none; }
+/* ✅ [문제 4 해결] 네비게이션 버튼 가운데 정렬 및 여백 주기 */
+.top-nav { 
+    position: fixed; 
+    top: 0; left: 0; 
+    width: 100%; height: 60px; 
+    display: flex; 
+    justify-content: center; /* 가운데 정렬로 변경 */
+    gap: 40px; /* 버튼 사이의 여백 (필요에 따라 늘리거나 줄이세요) */
+    align-items: center; 
+    padding: 0 20px; 
+    background: var(--bg); 
+    z-index: 1000; 
+    border-bottom: 1px solid var(--border); 
+}
+
+/* ✅ [문제 3 해결] 사이트 내의 모든 주요 버튼 폰트 완벽 통일 (프린트 버튼 포함) */
+.btn-main, .btn-text-only, .receipt-floating-btn, .refresh-feed-btn, .nav-btn { 
+    font-family: -apple-system, sans-serif; /* 기본 폰트 강제 적용 */
+    font-size: 11px !important; 
+    font-weight: 800 !important; 
+    text-transform: uppercase !important; 
+    letter-spacing: 1px !important; 
+}
+
+.nav-btn { 
+    background: transparent; border: none; color: var(--fg); 
+    opacity: 0.6; transition: 0.3s; cursor: pointer; padding: 8px 10px; 
+}
+.nav-btn:hover { opacity: 1; }
+
+/* ✅ 새로고침 버튼 위치를 네비바 아래로 내림 */
+/* ✅ 새로고침 버튼 (네비바 아래 위치) */
+.refresh-feed-btn {
+    position: fixed;
+    top: 80px; 
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255, 255, 255, 0.4); 
+    backdrop-filter: blur(12px); 
+    -webkit-backdrop-filter: blur(12px); 
+    color: var(--fg);
+    border: 1px solid rgba(128, 128, 128, 0.2);
+    padding: 12px 28px;
+    border-radius: 30px;
+    cursor: pointer;
+    z-index: 9999999;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    transition: all 0.2s;
+    display: none; /* 🔴 이 한 줄이 빠져서 계속 보였던 겁니다! 무조건 추가! */
+}
+body.dark-mode .refresh-feed-btn {
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.refresh-feed-btn:active {
+    transform: translate(-50%, 2px) scale(0.95);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
 
 /* 슬라이더 간격 및 디자인 */
 .slider-container { margin: 20px 0 40px 0; }
 input[type=range] { width: 100%; height: 4px; background: var(--border); appearance: none; outline: none; border-radius: 2px; }
 input[type=range]::-webkit-slider-thumb { appearance: none; width: 24px; height: 24px; background: var(--fg); border-radius: 50%; cursor: pointer; }
 
-/* 영수증 모달 & 닫기 버튼 */
-.modal-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.9); z-index: 10000; display: flex; flex-direction: column; justify-content: center; align-items: center; overflow-y: auto; padding: 20px 0; }
-.btn-text-only { display: block; background: #000000; color: #ffffff; border: 1px solid #ffffff; padding: 12px 30px; border-radius: 50px; cursor: pointer; margin: 30px auto 10px auto; transition: all 0.2s ease-in-out; text-decoration: none; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); width: fit-content; }
-.btn-text-only:hover { background: #ffffff; color: #000000; transform: scale(1.05); }
-body.light-mode .btn-text-only { background: #000000; color: #ffffff; border-color: #000000; }
-
+/* 퀴즈/카테고리 */
 .quiz-grid { display: flex; flex-direction: column; gap: 8px; width: 100%; max-height: 350px; overflow-y: auto; }
 .quiz-btn { background: var(--gray); color: var(--fg); border: none; padding: 14px; border-radius: 12px; font-size: 13px; cursor: pointer; text-align: left; transition: 0.2s; }
 .quiz-btn.active { background: var(--fg); color: var(--bg); font-weight: bold; }
-
 .category-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%; max-height: 200px; overflow-y: auto; }
 .cat-btn { background: var(--gray); color: var(--fg); border: none; padding: 12px; border-radius: 10px; font-size: 12px; cursor: pointer; }
 .cat-btn.active { background: var(--fg); color: var(--bg); font-weight: bold; }
-
 .progress-track { width: 100%; height: 2px; background: var(--gray); margin: 20px 0; }
 .progress-fill { width: 0%; height: 100%; background: var(--fg); }
 
+/* 메인 피드 & 그리드 */
 #main-feed { padding-top: 60px; height: 100vh; overflow-y: auto; position: relative; z-index: 10; }
 .feed-header { width: 100%; padding: 15px 0; display: flex; justify-content: center; background: var(--bg); }
-.refresh-feed-btn { background: var(--gray); color: var(--fg); border: 1px solid var(--border); padding: 10px 20px; border-radius: 20px; cursor: pointer; z-index: 100; transition: 0.2s; }
-
-@keyframes pull-bounce { 0% { transform: translateY(0); } 30% { transform: translateY(60px); } 50% { transform: translateY(-15px); } 70% { transform: translateY(8px); } 90% { transform: translateY(-3px); } 100% { transform: translateY(0); } }
-.refresh-bounce { animation: pull-bounce 0.6s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
-
 .grid-container { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; width: 100%; transform-origin: top center; }
 .grid-item { position: relative; width: 100%; aspect-ratio: 1 / 1; background: var(--gray); overflow: hidden; cursor: pointer; z-index: 20; }
 .grid-item img { width: 100%; height: 100%; object-fit: cover; display: block; pointer-events: none; }
 
+@keyframes pull-bounce { 0% { transform: translateY(0); } 30% { transform: translateY(60px); } 50% { transform: translateY(-15px); } 70% { transform: translateY(8px); } 90% { transform: translateY(-3px); } 100% { transform: translateY(0); } }
+.refresh-bounce { animation: pull-bounce 0.6s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
+
+/* ========================================= */
+/* ✅ 2. 릴스 오버레이 (오리지널 풀스크린 100vh 복구) */
+/* ========================================= */
 .detail-overlay { position: fixed; inset: 0; background: #000; z-index: 9999; overflow-y: scroll; scroll-snap-type: y mandatory; }
-.reel-section { width: 100%; height: 100vh; scroll-snap-align: start; position: relative; }
-.reel-section img { width: 100%; height: 100%; object-fit: cover; opacity: 0.8; }
-.side-actions { position: absolute; right: 20px; bottom: 40px; display: flex; flex-direction: column; align-items: center; z-index: 10000; }
-.action-btn { background: rgba(0,0,0,0.6); border: none; color: white; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; width: 60px; height: 60px; border-radius: 50%; backdrop-filter: blur(5px); }
-.action-btn span.icon { font-size: 28px; line-height: 1; margin-top: 2px; transition: color 0.2s; }
-.action-btn span.count { font-size: 11px; font-weight: bold; margin-top: 2px; }
-.action-btn.active span.icon { color: var(--accent); }
+.close-detail { position: fixed; top: 15px; left: 15px; z-index: 100000; background: none; border: none; color: #fff; opacity: 0.6; font-size: 30px; cursor: pointer; text-shadow: 0 2px 5px rgba(0,0,0,0.5); }
 
-.close-detail { position: fixed; top: 15px; left: 15px; z-index: 10000; background: none; border: none; color: #fff; opacity: 0.6; font-size: 30px; cursor: pointer; text-shadow: 0 2px 5px rgba(0,0,0,0.5); }
+.reel-section { 
+    width: 100%; 
+    height: 100vh; /* 화면 꽉 차게 원상복구 */
+    scroll-snap-align: start; 
+    position: relative; 
+    background-color: #000;
+}
+.reel-section img { 
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover; 
+    opacity: 0.8; 
+    pointer-events: none; /* 클릭 방해 금지 */
+}
 
+/* ✅ 더블클릭 전용 투명 레이어 (풀스크린) */
+.click-layer {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 5;
+}
+
+/* ✅ 좋아요 버튼 (우측 하단 배치) */
+.side-actions { 
+    position: absolute; 
+    right: 20px; 
+    bottom: 80px; 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    z-index: 10000; 
+}
+.action-btnLike { 
+    background: rgba(0,0,0,0.5); 
+    border: none; 
+    color: white; 
+    cursor: pointer; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    width: 55px; 
+    height: 55px; 
+    border-radius: 50%; 
+    backdrop-filter: blur(5px);
+    font-size: 26px;
+    transition: 0.2s;
+}
+.action-btnLike.active { color: #ff4757; transform: scale(1.1); }
+
+/* 하트 뿅 애니메이션 */
+@keyframes heartBeatOut {
+    0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+    50% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+    100% { transform: translate(-50%, -50%) scale(1); opacity: 0; }
+}
+
+/* 튕기기(Nudge) 애니메이션 */
+@keyframes scroll-nudge {
+    0%, 100% { transform: translateY(0); }
+    40% { transform: translateY(-25px); } 
+    60% { transform: translateY(10px); }
+    80% { transform: translateY(-5px); }
+}
+.nudge-active { animation: scroll-nudge 1.2s cubic-bezier(0.36, 0, 0.66, -0.56) !important; }
+
+/* ✅ 메모리 누수 방지 */
+.grid-item, .reel-section { content-visibility: auto; contain-intrinsic-size: 500px; }
+
+/* ========================================= */
+/* 영수증 모달 & 프린트 (기존 유지) */
+/* ========================================= */
+.modal-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.9); z-index: 100000; display: flex; flex-direction: column; justify-content: center; align-items: center; overflow-y: auto; padding: 20px 0; }
+.receipt-floating-btn { position: fixed; bottom: 30px; right: 30px; z-index: 9998; background: var(--fg); color: var(--bg); border: none; padding: 15px 25px; border-radius: 50px; cursor: pointer; }
 .receipt-paper { background-color: #f4f4f0; padding: 50px 35px; color: #111; font-family: monospace; width: 340px; margin: 0 auto; clip-path: polygon(0% 2%, 10% 0%, 20% 3%, 30% 0%, 40% 2%, 50% 0%, 60% 3%, 70% 0%, 80% 2%, 90% 0%, 100% 3%, 100% 97%, 90% 100%, 80% 97%, 70% 100%, 60% 97%, 50% 100%, 40% 97%, 30% 100%, 20% 97%, 10% 100%, 0% 97%); }
 .receipt-header-spacing { display: flex; flex-direction: column; align-items: center; margin-bottom: 30px; width: 100%; }
 .receipt-main-title { font-size: 20px; font-weight: 900; margin-bottom: 12px; letter-spacing: 1.5px; text-align: center; }
 .meta-data { font-size: 12px; margin-bottom: 5px; font-weight: normal; text-align: center; width: 100%; }
-
 .receipt-line { border-bottom: 1.5px dashed #444; margin: 18px 0; width: 100%; }
 .receipt-item { display: flex !important; justify-content: space-between !important; align-items: flex-start !important; font-size: 11.5px; margin: 10px 0; width: 100%; }
 .receipt-item span:first-child { text-align: left; flex: 1; }
 .receipt-item span:last-child { text-align: right; font-weight: bold; margin-left: 10px; max-width: 60%; }
-
 .penalty-row { color: red; font-size: 13px !important; margin-top: 25px !important; }
 .penalty-row span { font-weight: 900 !important; }
-.receipt-floating-btn { position: fixed; bottom: 30px; right: 30px; z-index: 9998; background: var(--fg); color: var(--bg); border: none; padding: 15px 25px; border-radius: 50px; cursor: pointer; }
 
 @media print {
     @page { margin: 0; size: 58mm auto; }
@@ -105,17 +219,4 @@ body.light-mode .btn-text-only { background: #000000; color: #ffffff; border-col
     .penalty-row { color: #000 !important; font-size: 10px !important; margin-top: 15px !important; }
     .penalty-row span { font-weight: 900 !important; }
     button { display: none !important; }
-}
-
-/* ✅ 멈춰있을 때 스크롤을 유도하는 '넛지(Nudge)' 애니메이션 */
-@keyframes scroll-nudge {
-    0%, 100% { transform: translateY(0); }
-    40% { transform: translateY(-15px); } /* 화면을 살짝 위로 들어 올림 (스크롤 내리라는 암시) */
-    60% { transform: translateY(5px); }
-    80% { transform: translateY(-5px); }
-}
-
-/* JS에서 idle 상태일 때 이 클래스를 메인 피드에 붙입니다. */
-.nudge-active {
-    animation: scroll-nudge 1.2s ease-in-out;
 }

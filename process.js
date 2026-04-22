@@ -17,30 +17,48 @@ function changeImg(el, galleryId) {
     el.style.opacity = "1";
 }
 
-// 2. 다크/라이트 모드 전환 (메인 페이지 연동)
+
+// 2. 다크/라이트 모드 전환 및 연동
 function toggleMode() {
     const body = document.body;
     const isLight = body.classList.contains('light-mode');
-    const newMode = isLight ? 'dark-mode' : 'light-mode';
+    const newMode = isLight ? 'dark' : 'light';
     
-    body.className = newMode;
-    const modeBtn = document.getElementById('mode-toggle');
-    if (modeBtn) {
-        modeBtn.innerText = isLight ? "Light Mode" : "Dark Mode";
-    }
-    localStorage.setItem('doomscroll_mode', isLight ? 'dark' : 'light');
+    applyMode(newMode);
+    localStorage.setItem('doomscroll_mode', newMode); // index.html과 공유
 }
 
-// 3. 페이지 초기 설정
-document.addEventListener("DOMContentLoaded", () => {
-    // 저장된 테마 불러오기 (기본값 light)
-    const savedMode = localStorage.getItem('doomscroll_mode') || 'light';
-    document.body.className = savedMode + '-mode';
-    
+function applyMode(mode) {
+    document.body.className = mode + '-mode';
     const modeBtn = document.getElementById('mode-toggle');
     if (modeBtn) {
-        modeBtn.innerText = (savedMode === 'light') ? "Dark Mode" : "Light Mode";
+        modeBtn.innerText = (mode === 'light') ? "Dark Mode" : "Light Mode";
     }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    // 메인 페이지에서 저장한 모드 동기화
+    const savedMode = localStorage.getItem('doomscroll_mode') || 'light';
+    applyMode(savedMode);
+
+// 3. 초기 설정
+document.addEventListener("DOMContentLoaded", () => {
+    // 메인 페이지에서 저장한 모드 동기화
+    const savedMode = localStorage.getItem('doomscroll_mode') || 'light';
+    applyMode(savedMode);
+
+    // 모든 갤러리 첫 번째 이미지 자동 세팅
+    document.querySelectorAll('.gallery-module').forEach(gal => {
+        const firstThumb = gal.querySelector('.thumb-list img');
+        if (firstThumb) {
+            const mainImg = gal.querySelector('.main-display img');
+            mainImg.src = firstThumb.src;
+            firstThumb.style.borderColor = "var(--accent)";
+            firstThumb.style.opacity = "1";
+        }
+    });
+});
+
 
     // 모든 갤러리 첫 번째 이미지 세팅
     document.querySelectorAll('.gallery-module').forEach(gal => {
